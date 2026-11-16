@@ -1,29 +1,33 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Noto_Sans } from "next/font/google";
+import "./styles/globals.css";
+import { ThemeProvider } from "next-themes";
+import Navbar from "@/components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Variable font: every weight from 100 to 900 comes from one file
+const noto_sans = Noto_Sans({
+  variable: "--font-noto-sans",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Bronson Chow",
-  description: "Personal portfolio",
+  title: "Bronson Chow's Site",
+  description: "Personal portfolio of sorts",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${noto_sans.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Navbar />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

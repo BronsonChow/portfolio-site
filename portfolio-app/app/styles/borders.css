@@ -1,0 +1,58 @@
+:root {
+  --default-border: #8BBCF9;
+
+  --navbar-border-width: 0.2rem;
+  --navbar-border-color: var(--default-border);
+
+  --dropdown-border-width: 0.1rem;
+  --dropdown-border-color: var(--default-border);
+
+  --dropdown-grid-border-width: 0.1rem;
+  --dropdown-grid-border-color: var(--default-border);
+
+  --icon-button-border-width: 0rem;
+  --icon-button-border-color: var(--default-border);
+
+  --icon-box-border-width: 0rem;
+  --icon-box-border-color: var(--default-border);
+
+  --mobile-menu-border-width: 0.1rem;
+  --mobile-menu-border-color: var(--default-border);
+}
+
+.dark {
+  --default-border: #063A74;
+}
+
+@theme {
+  --radius-nav: 0.6rem;
+  --radius-menu-item: 0.6rem;
+}
+
+/* the classes used in Navbar.tsx */
+@utility border-navbar {
+  border-bottom: var(--navbar-border-width) solid var(--navbar-border-color);
+}
+@utility border-dropdown {
+  border: var(--dropdown-border-width) solid var(--dropdown-border-color);
+}
+@utility border-dropdown-grid {
+  border: var(--dropdown-grid-border-width) solid var(--dropdown-grid-border-color);
+}
+@utility border-icon-button {
+  border: var(--icon-button-border-width) solid var(--icon-button-border-color);
+}
+@utility border-icon-box {
+  border: var(--icon-box-border-width) solid var(--icon-box-border-color);
+}
+@utility border-mobile-menu {
+  border-top: var(--mobile-menu-border-width) solid var(--mobile-menu-border-color);
+  border-bottom: var(--mobile-menu-border-width) solid var(--mobile-menu-border-color);
+}
+
+/* default */
+@layer base {
+  * {
+    border-color: var(--default-border);
+  }
+}

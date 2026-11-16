@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-svg-core/styles.css" layer(base); /* icon base styles; layer(base) lets Tailwind classes resize icons */
+@import "tw-animate-css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./borders.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #DAEBFF;
+  --navbar: #FFFFFF;
+  --foreground: #021327;
+  --popover: var(--navbar);
+  --popover-foreground: #0954AE;
+  --accent: #DAEBFF;
+  --accent-foreground: #0954AE;
+  --muted-foreground: #021327;
+  --ring: #8BBCF9;
+
+  --icon-button: #F34616;
+  --icon-button-foreground: #FFFFFF;
+  --icon-button-hover: #FBC1B1;
+  --icon-button-hover-foreground: #021327;
+}
+
+.dark {
+  --background: #010C18;
+  --navbar: #021327;
+  --foreground: #DAEBFF;
+  --popover: var(--navbar);
+  --popover-foreground: #8BBCF9;
+  --accent: #04254E;
+  --accent-foreground: #8BBCF9;
+  --muted-foreground: #DAEBFF;
+  --ring: #063A74;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-navbar: var(--navbar);
+  --color-foreground: var(--foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--default-border);
+  --color-ring: var(--ring);
+  --color-icon-button: var(--icon-button);
+  --color-icon-button-foreground: var(--icon-button-foreground);
+  --color-icon-button-hover: var(--icon-button-hover);
+  --color-icon-button-hover-foreground: var(--icon-button-hover-foreground);
+
+  --font-sans: var(--font-noto-sans), sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}

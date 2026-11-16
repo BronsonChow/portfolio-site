@@ -1,0 +1,12 @@
+@theme {
+  /* navbar */
+  --text-brand: 1.4rem;
+  --text-nav: 1.2rem;
+  --text-menu-title: 1.2rem;
+  --text-menu-description: 1rem;
+  --text-menu-note: 1rem;
+  --text-menu-label: 1.2rem;
+
+  /* pages */
+  --text-title: 2rem;
+}

@@ -1,0 +1,29 @@
+@theme {
+  /* navbar */
+  --spacing-navbar-height: 3rem;
+  --spacing-navbar-padding: 1rem;
+  --spacing-nav-gap: 0.4rem;
+  --spacing-brand-padding-x: 1rem;
+  --spacing-brand-padding-y: 0.2rem;
+
+  /* navbar buttons */
+  --spacing-nav-button: 2.6rem;
+  --spacing-nav-button-padding-x: 1rem;
+  --spacing-nav-button-padding-y: 0rem;
+  --spacing-nav-button-gap: 0.4rem;
+  --spacing-icon-button-gap: 0.4rem;
+  --spacing-icon: 1.4rem;
+  --spacing-caret: 1.2rem;
+
+  /* dropdown panels */
+  --spacing-dropdown-width: 39rem;
+  --spacing-dropdown-offset: 0.4rem;
+  --spacing-dropdown-padding: 0.4rem;
+  --spacing-dropdown-gap: 0.4rem;
+
+  /* menu items (dropdowns and mobile menu) */
+  --spacing-menu-item-padding: 0.4rem;
+  --spacing-menu-item-gap: 0.4rem;
+  --spacing-menu-item-icon: 3rem;
+  --spacing-mobile-menu-gap: 0.4rem;
+}
