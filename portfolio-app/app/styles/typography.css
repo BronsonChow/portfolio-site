@@ -31,5 +31,19 @@
   --font-sheet-heading: var(--font-noto);
   --font-unit-name: var(--font-noto);
   --font-stat: var(--font-noto);
+
+  /* crusade sheet unit details panel */
+  --text-details: 1rem;
+  --text-details-heading: 1rem;
+  --text-weapon-header: 1rem;
+  --text-weapon-name: 1rem;
+  --text-weapon-stat: 1rem;
+  --text-weapon-abilities: 0.8rem;
+
   --font-details: var(--font-noto);
+  --font-details-heading: var(--font-noto);
+  --font-weapon-header: var(--font-noto);
+  --font-weapon-name: var(--font-noto);
+  --font-weapon-stat: var(--font-noto);
+  --font-weapon-abilities: var(--font-noto);
 }

@@ -23,6 +23,11 @@
   --icon-button-hover: #FBC1B1;
   --icon-button-hover-foreground: #021327;
 
+  /* crusade sheet unit details panel */
+  --details-background: #c5c5c5;
+  --details-foreground: #021327;
+  --details-muted-foreground: #0954AE;
+
   --hero-opacity: 75%;
   --hero-paragraph-opacity: 60%;
   --bg-overlay-opacity: 50%;
@@ -38,6 +43,10 @@
   --accent-foreground: #8BBCF9;
   --muted-foreground: #DAEBFF;
   --ring: #063A74;
+
+  --details-background: #021327;
+  --details-foreground: #DAEBFF;
+  --details-muted-foreground: #8BBCF9;
 }
 
 @theme inline {
@@ -55,6 +64,9 @@
   --color-icon-button-foreground: var(--icon-button-foreground);
   --color-icon-button-hover: var(--icon-button-hover);
   --color-icon-button-hover-foreground: var(--icon-button-hover-foreground);
+  --color-details-background: var(--details-background);
+  --color-details-foreground: var(--details-foreground);
+  --color-details-muted-foreground: var(--details-muted-foreground);
 
   --font-noto: var(--font-noto-sans), sans-serif;
   --font-cormorant: var(--font-cormorant_garamond), serif;

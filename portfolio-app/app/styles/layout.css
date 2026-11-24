@@ -39,6 +39,16 @@
   --spacing-toggle-column: 2rem;
   --spacing-toggle-book: 1.4rem;
   --spacing-stat-column: 3.2rem;
+
+  /* crusade sheet weapons table (details panel)
+     the Weapon name column takes whatever width is left over */
+  --spacing-weapon-table-min: 26rem;
+  --spacing-weapon-range-column: 4rem;
+  --spacing-weapon-a-column: 3.2rem;
+  --spacing-weapon-bs-column: 3.2rem;
+  --spacing-weapon-s-column: 3.2rem;
+  --spacing-weapon-ap-column: 3.2rem;
+  --spacing-weapon-d-column: 3.2rem;
 }
 
 :root {

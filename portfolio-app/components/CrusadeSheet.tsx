@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
-import type { Unit } from "@/data/crusade";
+import { is_weapon, type Note, type Unit, type Weapon } from "@/data/crusade";
 
 const styles = {
   // hero
@@ -36,9 +36,44 @@ const styles = {
   details: "grid",
   details_open: "details-panel-open",
   details_closed: "details-panel-closed",
-  details_inner: "min-h-0 overflow-hidden",
-  details_text: "p-details-padding font-details",
+  // colours: --details-* in globals.css; type: --text-details* / --text-weapon-* in typography.css
+  details_inner: "min-h-0 overflow-hidden bg-details-background text-details-foreground",
+  details_text: "p-details-padding font-details text-details",
+  abilities: "border-cell-t",
+  details_heading: "px-details-padding pt-details-padding font-details-heading text-details-heading font-semibold",
+  details_list: "list-disc px-details-padding pb-details-padding pl-8 font-details text-details",
+
+  // wargear table inside the details panel (flush with the panel edges)
+  table_wrap: "overflow-x-auto",
+  // column widths come from --spacing-weapon-*-column in layout.css
+  table: "w-full min-w-weapon-table-min table-fixed border-collapse",
+  th: "bg-accent p-cell-padding text-center font-weapon-header text-weapon-header font-semibold",
+  th_name: "bg-accent p-cell-padding text-left font-weapon-header text-weapon-header font-semibold",
+  td: "border-cell-t border-cell-l p-cell-padding text-center font-weapon-stat text-weapon-stat",
+  td_name: "border-cell-t p-cell-padding text-left font-weapon-name text-weapon-name font-normal",
+  weapon_abilities: "block font-weapon-abilities text-weapon-abilities text-details-muted-foreground",
 };
+
+// width classes are written out in full so Tailwind can find them
+const weapon_columns = [
+  { label: "Range", title: "Range", width: "w-weapon-range-column" },
+  { label: "A", title: "Attacks", width: "w-weapon-a-column" },
+  { label: "BS/WS", title: "Ballistic / Weapon Skill", width: "w-weapon-bs-column" },
+  { label: "S", title: "Strength", width: "w-weapon-s-column" },
+  { label: "AP", title: "Armour Penetration", width: "w-weapon-ap-column" },
+  { label: "D", title: "Damage", width: "w-weapon-d-column" },
+];
+
+function format_weapon(w: Weapon) {
+  return [
+    w.Range === "Melee" ? "Melee" : `${w.Range}"`,
+    `${w.A}`,
+    `${w.BS}+`,
+    `${w.S}`,
+    `${w.AP}`,
+    `${w.D}`,
+  ];
+}
 
 const stat_columns = [
   { label: "M", title: "Movement" },
@@ -127,9 +162,79 @@ function UnitRow({ unit }: { unit: Unit }) {
         inert={!open}
       >
         <div className={styles.details_inner}>
-          <p className={styles.details_text}>{unit.details ?? `Details for ${unit.name}`}</p>
+          <UnitDetails unit={unit} />
         </div>
       </div>
     </li>
+  );
+}
+
+function UnitDetails({ unit }: { unit: Unit }) {
+  const wargear = unit.wargear ?? [];
+  const weapons = wargear.filter(is_weapon);
+  const notes = wargear.filter((entry): entry is Note => !is_weapon(entry));
+  const abilities = unit.abilities ?? [];
+
+  if (wargear.length === 0 && abilities.length === 0) {
+    return <p className={styles.details_text}>No details for {unit.name}.</p>;
+  }
+
+  return (
+    <>
+      {weapons.length > 0 && (
+        <div className={styles.table_wrap}>
+          <table className={styles.table}>
+            <caption className="sr-only">Wargear for {unit.name}</caption>
+            <colgroup>
+              <col />
+              {weapon_columns.map((col) => (
+                <col key={col.label} className={col.width} />
+              ))}
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col" className={styles.th_name}>Weapon</th>
+                {weapon_columns.map((col) => (
+                  <th key={col.label} scope="col" className={styles.th}>
+                    <abbr title={col.title} className="no-underline">{col.label}</abbr>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {weapons.map((w) => (
+                <tr key={w.Name}>
+                  <th scope="row" className={styles.td_name}>
+                    {w.Name}
+                    {w.Abilities && w.Abilities.length > 0 && (
+                      <span className={styles.weapon_abilities}>[{w.Abilities.join(", ")}]</span>
+                    )}
+                  </th>
+                  {format_weapon(w).map((value, i) => (
+                    <td key={weapon_columns[i].label} className={styles.td}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {notes.map((note, i) => (
+        <p key={i} className={styles.details_text}>{note.Desc}</p>
+      ))}
+
+      {abilities.length > 0 && (
+        // divider only when wargear sits above it
+        <div className={wargear.length > 0 ? styles.abilities : undefined}>
+          <h4 className={styles.details_heading}>Abilities</h4>
+          <ul className={styles.details_list}>
+            {abilities.map((a, i) => (
+              <li key={i}>{a.Desc}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
