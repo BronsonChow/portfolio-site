@@ -22,6 +22,10 @@
   --icon-button-foreground: #FFFFFF;
   --icon-button-hover: #FBC1B1;
   --icon-button-hover-foreground: #021327;
+
+  --hero-opacity: 75%;
+  --hero-paragraph-opacity: 60%;
+  --bg-overlay-opacity: 50%;
 }
 
 .dark {
@@ -52,11 +56,12 @@
   --color-icon-button-hover: var(--icon-button-hover);
   --color-icon-button-hover-foreground: var(--icon-button-hover-foreground);
 
-  --font-sans: var(--font-noto-sans), sans-serif;
+  --font-noto: var(--font-noto-sans), sans-serif;
+  --font-cormorant: var(--font-cormorant_garamond), serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-noto);
 }

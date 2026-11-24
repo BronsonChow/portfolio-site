@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function Lab3Page() {
   return (
     <main className="flex flex-1 items-center justify-center">
-      <h1 className="text-title leading-tight font-semibold tracking-tight">Lab 3</h1>
+      <h1 className="text-lab-3-title leading-tight font-semibold tracking-tight">Lab 3</h1>
     </main>
   );
 }

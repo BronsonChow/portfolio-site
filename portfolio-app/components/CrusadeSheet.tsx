@@ -7,33 +7,37 @@ import type { Unit } from "@/data/crusade";
 
 const styles = {
   // hero
-  hero: "my-sheet-gutter w-full bg-background/75 py-sheet-gutter text-center",
-  hero_title: "text-title leading-tight font-normal tracking-tight",
-  hero_paragraph: "mt-2 w-full bg-accent/60 px-2 text-hero-paragraph",
+  hero: "my-sheet-gutter w-full bg-background/(--hero-opacity) py-sheet-gutter text-center",
+  hero_title: "font-hero-title text-hero-title leading-tight font-normal tracking-tight",
+  hero_subtitle: "font-hero-subtitle text-hero-subtitle leading-tight font-normal tracking-tight",
+  hero_paragraph:
+    "mt-hero-paragraph-gap w-full bg-accent/(--hero-paragraph-opacity) px-hero-paragraph-padding font-hero-paragraph text-hero-paragraph",
 
   // card container
-  sheet: "mx-auto mb-sheet-gutter w-[95%] max-w-sheet-width border-2 bg-navbar",
-  sheet_heading: "p-cell-padding text-sheet-heading font-semibold",
-  empty: "border-t p-cell-padding text-muted-foreground",
+  sheet: "mx-auto mb-sheet-gutter w-sheet-width-mobile max-w-sheet-width border-sheet bg-navbar",
+  sheet_heading: "p-cell-padding font-sheet-heading text-sheet-heading font-semibold",
+  empty: "border-cell-t p-cell-padding text-muted-foreground",
 
   // rows (header + units share the same columns)
-  row: "flex border",
+  // top divider only: the sheet's own border covers the outer edges
+  row: "flex border-cell-t",
   header_row: "flex bg-accent font-semibold",
   // column sizes come from --spacing-name-column / -toggle-column / -stat-column in layout.css
-  name: "min-w-0 grow basis-name-column p-cell-padding text-unit-name [overflow-wrap:anywhere]",
+  name: "min-w-0 grow basis-name-column p-cell-padding font-unit-name text-unit-name [overflow-wrap:anywhere]",
   toggle_spacer: "w-toggle-column shrink-0",
   toggle:
     "flex w-toggle-column shrink-0 cursor-pointer items-center justify-center p-cell-padding transition-colors hover:text-icon-button focus-visible:outline-2 focus-visible:outline-ring aria-expanded:text-icon-button",
   toggle_icon: "size-toggle-book",
-  stat: "min-w-0 grow-0 shrink basis-stat-column text-center text-stat [overflow-wrap:anywhere]",
-  stat_cell: "border-l",
+  stat: "min-w-0 grow-0 shrink basis-stat-column text-center font-stat text-stat [overflow-wrap:anywhere]",
+  stat_cell: "border-cell-l",
 
   // expanding details panel
-  details: "grid transition-[grid-template-rows] duration-200 ease-in-out",
-  details_open: "grid-rows-[1fr] border border-t-0",
-  details_closed: "grid-rows-[0fr]",
+  // open/close animation + divider timing live in borders.css (details-panel-*)
+  details: "grid",
+  details_open: "details-panel-open",
+  details_closed: "details-panel-closed",
   details_inner: "min-h-0 overflow-hidden",
-  details_text: "p-2",
+  details_text: "p-details-padding font-details",
 };
 
 const stat_columns = [
@@ -59,7 +63,7 @@ export default function CrusadeSheet({ units }: { units: Unit[] }) {
     <>
       <section className={styles.hero}>
         <h1 className={styles.hero_title}>Warhammer 40,000 Crusade Sheet</h1>
-        <h2 className={styles.hero_title}>10th Edition</h2>
+        <h2 className={styles.hero_subtitle}>10th Edition</h2>
         <p className={styles.hero_paragraph}>
           The purpose of this site is to <em>hopefully</em> reduce the billions of open tabs of Wahapedia.
         </p>

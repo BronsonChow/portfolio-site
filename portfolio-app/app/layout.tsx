@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Noto_Sans, Cormorant_Garamond } from "next/font/google";
 import "./styles/globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
 
 const noto_sans = Noto_Sans({
   variable: "--font-noto-sans",
+  subsets: ["latin"],
+});
+const cormorant_garamond = Cormorant_Garamond({
+  variable: "--font-cormorant_garamond",
   subsets: ["latin"],
 });
 
@@ -18,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${noto_sans.variable} h-full antialiased`}
+      className={`${noto_sans.variable} ${cormorant_garamond.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

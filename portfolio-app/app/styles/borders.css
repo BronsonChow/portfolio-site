@@ -18,6 +18,12 @@
 
   --mobile-menu-border-width: 0.1rem;
   --mobile-menu-border-color: var(--default-border);
+
+  --sheet-border-width: 0.2rem;
+  --sheet-border-color: var(--default-border);
+
+  --cell-border-width: 0.2rem;
+  --cell-border-color: var(--default-border);
 }
 
 .dark {
@@ -53,6 +59,31 @@
   border-bottom: var(--mobile-menu-border-width) solid var(--mobile-menu-border-color);
 }
 
+/* the classes used in CrusadeSheet.tsx */
+@utility border-sheet {
+  border: var(--sheet-border-width) solid var(--sheet-border-color);
+}
+@utility border-cell-t {
+  border-top: var(--cell-border-width) solid var(--cell-border-color);
+}
+@utility border-cell-l {
+  border-left: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+/* details panel: the divider shows as soon as it opens,
+   but on close it waits for the slide to finish before disappearing */
+@utility details-panel-open {
+  grid-template-rows: 1fr;
+  border-top: var(--cell-border-width) solid var(--cell-border-color);
+  transition: grid-template-rows var(--sheet-expand-duration) ease-in-out;
+}
+@utility details-panel-closed {
+  grid-template-rows: 0fr;
+  border-top: 0 solid var(--cell-border-color);
+  transition:
+    grid-template-rows var(--sheet-expand-duration) ease-in-out,
+    border-top-width 0s var(--sheet-expand-duration);
+}
 /* default */
 @layer base {
   * {

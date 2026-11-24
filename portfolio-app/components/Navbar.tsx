@@ -40,7 +40,7 @@ const styles = {
   dropdown_note_link: "font-medium text-foreground hover:underline",
   viewport_wrapper: "absolute top-full left-0 flex justify-center",
   viewport:
-    "relative mt-dropdown-offset h-[var(--radix-navigation-menu-viewport-height)] w-full origin-top overflow-hidden rounded-dropdown border-dropdown bg-popover text-popover-foreground shadow data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+    "relative mt-dropdown-offset h-[var(--radix-navigation-menu-viewport-height)] w-full origin-top overflow-hidden rounded-dropdown border-dropdown bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:slide-in-from-top-4 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-4 md:w-[var(--radix-navigation-menu-viewport-width)]",
 
   // menu items (global)
   menu_item:

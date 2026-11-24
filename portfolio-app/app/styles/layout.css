@@ -29,10 +29,19 @@
 
   /* crusade sheet */
   --spacing-sheet-width: 39rem;
+  --spacing-sheet-width-mobile: 95%;
   --spacing-sheet-gutter: 1rem;
+  --spacing-hero-paragraph-gap: 1rem;
+  --spacing-hero-paragraph-padding: 0;
+  --spacing-details-padding: 0.2rem;
   --spacing-cell-padding: 0.2rem;
   --spacing-name-column: 10rem;
   --spacing-toggle-column: 2rem;
   --spacing-toggle-book: 1.4rem;
   --spacing-stat-column: 3.2rem;
+}
+
+:root {
+  /* crusade sheet details panel open/close speed */
+  --sheet-expand-duration: 100ms;
 }

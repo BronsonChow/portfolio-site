@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function VocaloidPage() {
   return (
     <main className="flex flex-1 items-center justify-center">
-      <h1 className="text-title leading-tight font-semibold tracking-tight">Vocaloid Stuff</h1>
+      <h1 className="text-vocaloid-title leading-tight font-semibold tracking-tight">Vocaloid Stuff</h1>
     </main>
   );
 }

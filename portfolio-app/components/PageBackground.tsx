@@ -5,7 +5,7 @@ const styles = {
   wrapper: "pointer-events-none fixed inset-0 -z-10",
   image: "object-cover object-[50%_45%]",
   // tints the image toward the theme so text on top stays readable
-  overlay: "absolute inset-0 bg-accent/50 mix-blend-hard-light dark:mix-blend-multiply",
+  overlay: "absolute inset-0 bg-accent/(--bg-overlay-opacity) mix-blend-hard-light dark:mix-blend-multiply",
 };
 
 export default function PageBackground({ src }: { src: string }) {

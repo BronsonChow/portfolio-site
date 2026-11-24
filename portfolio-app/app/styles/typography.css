@@ -7,12 +7,29 @@
   --text-menu-note: 1rem;
   --text-menu-label: 1.2rem;
 
-  /* pages */
-  --text-title: 2rem;
+  /* page titles */
+  --text-title: 2.4rem;
+  --text-subtitle: 1.4rem;
+
+  --text-home-title: var(--text-title);
+  --text-lab-1-title: var(--text-title);
+  --text-lab-2-title: var(--text-title);
+  --text-lab-3-title: var(--text-title);
+  --text-vocaloid-title: var(--text-title);
 
   /* crusade sheet */
+  --text-hero-title: var(--text-title);
+  --text-hero-subtitle: var(--text-subtitle);
   --text-hero-paragraph: 1.2rem;
-  --text-sheet-heading: 1.6rem;
+  --text-sheet-heading: 1.4rem;
   --text-unit-name: 1.2rem;
   --text-stat: 1.2rem;
+
+  --font-hero-title: var(--font-cormorant);
+  --font-hero-subtitle: var(--font-noto);
+  --font-hero-paragraph: var(--font-noto);
+  --font-sheet-heading: var(--font-noto);
+  --font-unit-name: var(--font-noto);
+  --font-stat: var(--font-noto);
+  --font-details: var(--font-noto);
 }
