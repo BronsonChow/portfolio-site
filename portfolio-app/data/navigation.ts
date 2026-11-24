@@ -1,35 +1,48 @@
-// Navbar menu content. Edit titles, links and icons here.
-// Icon paths point into the `public/` folder: "/icons/api.svg" is served from public/icons/api.svg.
-
 export type NavItem = {
   title: string;
   href: string;
   description?: string;
   icon: string;
+  disabled?: boolean;
 };
 
-// "Product" dropdown: shown as a 2-column grid of cards
 export const site_projects: NavItem[] = [
   {
     title: "Vocaloid Stuff",
-    href: "#",
+    href: "/projects/vocaloid",
     description: "Under construction",
     icon: "",
+    disabled: true,
   },
 ];
 
-// "Company" dropdown, left column: cards with descriptions
 export const csc_436: NavItem[] = [
   {
     title: "Lab 1",
-    href: "#",
+    href: "/csc-436/lab-1",
     description: "Static Foundations",
     icon: "",
+    disabled: true,
   },
   {
     title: "Lab 2",
-    href: "#",
+    href: "/csc-436/lab-2",
     description: "React Fundamentals",
     icon: "",
+    disabled: true,
+  },
+  {
+    title: "Lab 3",
+    href: "/csc-436/lab-3",
+    description: "Async React",
+    icon: "",
+    disabled: true,
+  },
+  {
+    title: "Lab 4",
+    href: "/csc-436/lab-4",
+    description: "Express + Supabase API",
+    icon: "",
+    disabled: false,
   },
 ];

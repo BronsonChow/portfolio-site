@@ -25,8 +25,11 @@
 }
 
 @theme {
-  --radius-nav: 0.6rem;
-  --radius-menu-item: 0.6rem;
+  --radius-nav-button: 0.4rem;
+  --radius-icon-button: 0.4rem;
+  --radius-dropdown: 1rem;
+  --radius-menu-item: 0.4rem;
+  --radius-icon-box: 0.4rem;
 }
 
 /* the classes used in Navbar.tsx */

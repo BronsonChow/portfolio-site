@@ -4,7 +4,6 @@ import "./styles/globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
 
-// Variable font: every weight from 100 to 900 comes from one file
 const noto_sans = Noto_Sans({
   variable: "--font-noto-sans",
   subsets: ["latin"],

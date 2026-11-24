@@ -2,7 +2,7 @@
   /* navbar */
   --spacing-navbar-height: 3rem;
   --spacing-navbar-padding: 1rem;
-  --spacing-nav-gap: 0.4rem;
+  --spacing-nav-gap: 0;
   --spacing-brand-padding-x: 1rem;
   --spacing-brand-padding-y: 0.2rem;
 
@@ -10,7 +10,7 @@
   --spacing-nav-button: 2.6rem;
   --spacing-nav-button-padding-x: 1rem;
   --spacing-nav-button-padding-y: 0rem;
-  --spacing-nav-button-gap: 0.4rem;
+  --spacing-nav-button-gap: 0;
   --spacing-icon-button-gap: 0.4rem;
   --spacing-icon: 1.4rem;
   --spacing-caret: 1.2rem;

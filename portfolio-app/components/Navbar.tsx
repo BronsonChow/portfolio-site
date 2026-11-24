@@ -24,35 +24,37 @@ const styles = {
     "bg-navbar/95 backdrop-blur-lg supports-[backdrop-filter]:bg-navbar/80",
   nav: "flex h-navbar-height w-full items-center justify-between px-navbar-padding",
   brand:
-    "rounded-nav px-brand-padding-x py-brand-padding-y text-brand font-semibold tracking-tight whitespace-nowrap transition-colors hover:bg-accent",
+    "rounded-nav-button px-brand-padding-x py-brand-padding-y text-brand font-semibold tracking-tight whitespace-nowrap transition-colors hover:bg-accent",
 
   // desktop dropdown menus
   menu_root: "relative z-10 hidden max-w-max flex-1 items-center justify-center md:flex",
   menu_list: "group flex flex-1 list-none items-center justify-center gap-nav-button-gap",
   trigger:
-    "group inline-flex min-h-nav-button w-max items-center justify-center rounded-nav bg-transparent px-nav-button-padding-x py-nav-button-padding-y text-nav font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none data-[state=open]:bg-accent/50",
+    "group inline-flex min-h-nav-button w-max items-center justify-center rounded-nav-button bg-transparent px-nav-button-padding-x py-nav-button-padding-y text-nav font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none data-[state=open]:bg-accent/50",
   caret:
     "relative top-px ml-1 size-caret transition duration-300 group-data-[state=open]:rotate-180",
   content:
     "left-0 top-0 w-full bg-popover p-1 pr-1.5 pb-1.5 data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto",
-  dropdown_grid: "grid w-dropdown-width grid-cols-2 gap-dropdown-gap rounded-nav border-dropdown-grid bg-popover p-dropdown-padding shadow",
+  dropdown_grid: "grid w-dropdown-width grid-cols-2 gap-dropdown-gap rounded-dropdown border-dropdown-grid bg-popover p-dropdown-padding shadow",
   dropdown_note: "text-menu-note text-muted-foreground",
   dropdown_note_link: "font-medium text-foreground hover:underline",
   viewport_wrapper: "absolute top-full left-0 flex justify-center",
   viewport:
-    "relative mt-dropdown-offset h-[var(--radix-navigation-menu-viewport-height)] w-full origin-top overflow-hidden rounded-nav border-dropdown bg-popover text-popover-foreground shadow data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+    "relative mt-dropdown-offset h-[var(--radix-navigation-menu-viewport-height)] w-full origin-top overflow-hidden rounded-dropdown border-dropdown bg-popover text-popover-foreground shadow data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
 
   // menu items (global)
   menu_item:
     "flex w-full flex-row gap-x-menu-item-gap rounded-menu-item p-menu-item-padding hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none",
+  menu_item_disabled:
+    "flex w-full flex-row gap-x-menu-item-gap rounded-menu-item p-menu-item-padding cursor-not-allowed opacity-50",
   menu_item_icon:
-    "flex aspect-square size-menu-item-icon shrink-0 items-center justify-center rounded-nav border-icon-box bg-background/40 shadow-sm",
+    "flex aspect-square size-menu-item-icon shrink-0 items-center justify-center rounded-icon-box border-icon-box bg-background/40 shadow-sm",
   menu_item_title: "text-menu-title font-medium",
   menu_item_description: "text-menu-description text-muted-foreground",
 
   // dark-mode & mobile dropdown button
   icon_button:
-    "inline-flex size-nav-button shrink-0 items-center justify-center rounded-nav border-icon-button bg-icon-button text-icon-button-foreground transition-colors hover:bg-icon-button-hover hover:text-icon-button-hover-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    "inline-flex size-nav-button shrink-0 items-center justify-center rounded-icon-button border-icon-button bg-icon-button text-icon-button-foreground transition-colors hover:bg-icon-button-hover hover:text-icon-button-hover-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
   hamburger_line:
     "absolute left-0 h-0.5 w-full rounded-full bg-current transition-all duration-300",
 
@@ -209,20 +211,35 @@ function MobileMenu({
   );
 }
 
-function ListItem({ title, description, icon, href }: NavItem) {
+function ListItem({ title, description, icon, href, disabled }: NavItem) {
+  const content = (
+    <>
+      {/* TODO : icon images */}
+      {/* <div className={styles.menu_item_icon}>
+        <NavIcon src={icon} size={20} />
+      </div> */}
+      <div className="flex flex-col items-start justify-center">
+        <span className={styles.menu_item_title}>{title}</span>
+        {description && (
+          <span className={styles.menu_item_description}>{description}</span>
+        )}
+      </div>
+    </>
+  );
+
+  // disabled items aren't links: they can't be clicked or reached with Tab
+  if (disabled) {
+    return (
+      <div className={styles.menu_item_disabled} aria-disabled="true">
+        {content}
+      </div>
+    );
+  }
+
   return (
     <NavigationMenu.Link asChild>
       <Link href={href} className={styles.menu_item}>
-        {/* TODO : icon images */}
-        {/* <div className={styles.menu_item_icon}>
-          <NavIcon src={icon} size={20} />
-        </div> */}
-        <div className="flex flex-col items-start justify-center">
-          <span className={styles.menu_item_title}>{title}</span>
-          {description && (
-            <span className={styles.menu_item_description}>{description}</span>
-          )}
-        </div>
+        {content}
       </Link>
     </NavigationMenu.Link>
   );
