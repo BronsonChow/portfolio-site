@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import CrusadeSheet from "@/components/CrusadeSheet";
+import PageBackground from "@/components/PageBackground";
+import { placeholder_units } from "@/data/crusade";
 
 export const metadata: Metadata = {
   title: "Lab 4 | CSC 436",
@@ -6,8 +9,9 @@ export const metadata: Metadata = {
 
 export default function Lab4Page() {
   return (
-    <main className="flex flex-1 items-center justify-center">
-      <h1 className="text-title leading-tight font-semibold tracking-tight">Lab 4</h1>
+    <main className="flex flex-1 flex-col">
+      <PageBackground src="/backgrounds/wh40k-gamewatcher-Filip-Galekovic.jpg" />
+      <CrusadeSheet units={placeholder_units} />
     </main>
   );
 }

@@ -9,4 +9,10 @@
 
   /* pages */
   --text-title: 2rem;
+
+  /* crusade sheet */
+  --text-hero-paragraph: 1.2rem;
+  --text-sheet-heading: 1.6rem;
+  --text-unit-name: 1.2rem;
+  --text-stat: 1.2rem;
 }

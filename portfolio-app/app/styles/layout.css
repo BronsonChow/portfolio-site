@@ -26,4 +26,13 @@
   --spacing-menu-item-gap: 0.4rem;
   --spacing-menu-item-icon: 3rem;
   --spacing-mobile-menu-gap: 0.4rem;
+
+  /* crusade sheet */
+  --spacing-sheet-width: 39rem;
+  --spacing-sheet-gutter: 1rem;
+  --spacing-cell-padding: 0.2rem;
+  --spacing-name-column: 10rem;
+  --spacing-toggle-column: 2rem;
+  --spacing-toggle-book: 1.4rem;
+  --spacing-stat-column: 3.2rem;
 }
