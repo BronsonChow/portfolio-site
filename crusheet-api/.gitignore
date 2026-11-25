@@ -1,4 +1,6 @@
-# Git never saves these.
-node_modules
-.env
+# Vercel CLI link folder
 .vercel
+
+# Local notes
+login.json
+new-unit.json
