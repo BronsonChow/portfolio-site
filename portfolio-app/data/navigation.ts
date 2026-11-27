@@ -29,7 +29,7 @@ export const csc_436: NavItem[] = [
     href: "/csc-436/lab-2",
     description: "React Fundamentals",
     icon: "",
-    disabled: true,
+    disabled: false,
   },
   {
     title: "Lab 3",
@@ -40,7 +40,7 @@ export const csc_436: NavItem[] = [
   },
   {
     title: "Lab 4",
-    href: "/csc-436/lab-4",
+    href: "https://crusheet-api.vercel.app/",
     description: "Express + Supabase API",
     icon: "",
     disabled: false,

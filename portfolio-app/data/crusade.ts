@@ -28,18 +28,6 @@ export function is_weapon(entry: Weapon | Note): entry is Weapon {
   return "Name" in entry;
 }
 
-export const placeholder_units: Unit[] = [
-  {
-    id: -1,
-    name: "unit-name",
-    movement: 99,
-    toughness: 99,
-    save: 99,
-    invuln_save: 99,
-    wounds: 99,
-  },
-];
-
 export const sample_units: Unit[] = [
   {
     id: 8000,

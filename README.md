@@ -9,5 +9,5 @@ Basic syntax: x.y.z.a*
 | :--- | :--- |
 | x - Release Version | &bull; 0 : Early version <br> &bull; 1 : Release version |
 | y - Major Updates | &bull; Page overhauls <br> &bull; Architecture refactor |
-| z - Minor updates | &bull; Initializing page routes <br> &bull; Patching pre-existing pages <br> &bull; Documentation edits |
+| z - Minor updates | &bull; Initializing page routes <br> &bull; Minor cleanup on pages <br> &bull; Documentation edits |
 | a* - Very minor updates | &bull; Minor style changes <br> &bull; Backend optimizations <br> &bull; Bug Fixes |
