@@ -11,4 +11,4 @@ import * as fromSample from "./units-sample.js";
 
 const source = config.useSupabase ? fromSupabase : fromSample;
 
-export const { listUnits, getUnit, createUnit, deleteUnit } = source;
+export const { listUnits, getUnit, createUnit, updateUnit, deleteUnit } = source;

@@ -42,19 +42,6 @@ export function is_weapon(entry) {
 }
 
 /** @type {Unit[]} */
-export const placeholder_units = [
-  {
-    id: -1,
-    name: "unit-name",
-    movement: 99,
-    toughness: 99,
-    save: 99,
-    invuln_save: 99,
-    wounds: 99,
-  },
-];
-
-/** @type {Unit[]} */
 export const sample_units = [
   {
     id: 8000,
@@ -66,14 +53,14 @@ export const sample_units = [
     wounds: 20,
     wargear: [
       {
-        Name: "OP Lasers",
+        Name: "Fin Funnels",
         Abilities: ["Ability 1", "Ability 2"],
         Range: 12,
-        A: 20,
+        A: 6,
         BS: 2,
         S: 50,
         AP: "-3",
-        D: "2d6",
+        D: "1d20",
       },
       {
         Name: "Punch",

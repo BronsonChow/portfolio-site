@@ -29,6 +29,13 @@ export async function createUnit(unit) {
   return strip(saved);
 }
 
+export async function updateUnit(id, userId, changes) {
+  const unit = units.find((u) => u.id === id && u.user_id === userId);
+  if (!unit) return null;
+  Object.assign(unit, changes);
+  return strip(unit);
+}
+
 export async function deleteUnit(id, userId) {
   const before = units.length;
   units = units.filter((unit) => !(unit.id === id && unit.user_id === userId));

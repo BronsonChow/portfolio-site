@@ -55,7 +55,61 @@ function checkWargear(entry, i) {
   };
 }
 
-// A new unit needs a name and its stat line. wargear and abilities are optional.
+// One checker per Unit field. Each returns { value } (cleaned) or { error }.
+// POST checks every field; PATCH checks only the fields that were sent.
+const fieldChecks = {
+  name(value) {
+    if (!isText(value)) return { error: "name is required" };
+    return { value: value.trim() };
+  },
+  movement(value) {
+    if (!isWhole(value, 0)) return { error: "movement must be a whole number, 0 or more" };
+    return { value };
+  },
+  toughness: (value) => wholeAboveZero("toughness", value),
+  save: (value) => wholeAboveZero("save", value),
+  wounds: (value) => wholeAboveZero("wounds", value),
+  invuln_save(value) {
+    if (value !== null && !isWhole(value, 1)) {
+      return { error: "invuln_save must be a whole number greater than 0, or null" };
+    }
+    return { value };
+  },
+  wargear(value) {
+    if (!Array.isArray(value)) return { error: "wargear must be a list" };
+    const clean = [];
+    for (const [i, entry] of value.entries()) {
+      const result = checkWargear(entry, i);
+      if (typeof result === "string") return { error: result };
+      clean.push(result);
+    }
+    return { value: clean };
+  },
+  abilities(value) {
+    if (!Array.isArray(value) || !value.every((a) => a && isText(a.Desc))) {
+      return { error: 'abilities must be a list like [{ "Desc": "..." }]' };
+    }
+    return { value: value.map((a) => ({ Desc: a.Desc.trim() })) };
+  },
+};
+
+function wholeAboveZero(key, value) {
+  if (!isWhole(value, 1)) return { error: `${key} must be a whole number greater than 0` };
+  return { value };
+}
+
+// Runs the checker for each field given. Stops at the first problem.
+function checkFields(fields) {
+  const clean = {};
+  for (const [key, value] of Object.entries(fields)) {
+    const result = fieldChecks[key](value);
+    if (result.error) return result;
+    clean[key] = result.value;
+  }
+  return { value: clean };
+}
+
+// POST: a new unit needs a name and its stat line. wargear and abilities are optional.
 export function validateUnit(req, res, next) {
   const {
     name,
@@ -68,40 +122,93 @@ export function validateUnit(req, res, next) {
     abilities = [],
   } = req.body ?? {};
 
-  if (!isText(name)) return res.status(400).json({ error: "name is required" });
-  if (!isWhole(movement, 0)) {
-    return res.status(400).json({ error: "movement must be a whole number, 0 or more" });
-  }
-  for (const [key, value] of Object.entries({ toughness, save, wounds })) {
-    if (!isWhole(value, 1)) {
-      return res.status(400).json({ error: `${key} must be a whole number greater than 0` });
-    }
-  }
-  if (invuln_save !== null && !isWhole(invuln_save, 1)) {
-    return res.status(400).json({ error: "invuln_save must be a whole number greater than 0, or null" });
-  }
+  const result = checkFields({ name, movement, toughness, save, invuln_save, wounds, wargear, abilities });
+  if (result.error) return res.status(400).json({ error: result.error });
 
-  if (!Array.isArray(wargear)) return res.status(400).json({ error: "wargear must be a list" });
-  const cleanWargear = [];
-  for (const [i, entry] of wargear.entries()) {
-    const result = checkWargear(entry, i);
-    if (typeof result === "string") return res.status(400).json({ error: result });
-    cleanWargear.push(result);
-  }
-
-  if (!Array.isArray(abilities) || !abilities.every((a) => a && isText(a.Desc))) {
-    return res.status(400).json({ error: 'abilities must be a list like [{ "Desc": "..." }]' });
-  }
-
-  req.unit = {
-    name: name.trim(),
-    movement,
-    toughness,
-    save,
-    invuln_save,
-    wounds,
-    wargear: cleanWargear,
-    abilities: abilities.map((a) => ({ Desc: a.Desc.trim() })),
-  };
+  req.unit = result.value;
   next();
+}
+
+// PATCH: send only the fields you want to change, e.g. { "wounds": 12 }.
+// id, user_id and anything else unknown is refused, so nobody can steal a unit.
+export function validateUnitPatch(req, res, next) {
+  const body = req.body ?? {};
+  if (typeof body !== "object" || Array.isArray(body)) {
+    return res.status(400).json({ error: "The request body must be a JSON object" });
+  }
+
+  const keys = Object.keys(body);
+  if (keys.length === 0) {
+    return res.status(400).json({ error: "Send at least one field to change" });
+  }
+  const unknown = keys.filter((key) => !Object.hasOwn(fieldChecks, key));
+  if (unknown.length > 0) {
+    return res.status(400).json({ error: `These fields cannot be changed: ${unknown.join(", ")}` });
+  }
+
+  const result = checkFields(body);
+  if (result.error) return res.status(400).json({ error: result.error });
+
+  req.changes = result.value;
+  next();
+}
+
+// ---------------------------------------------------------------------------
+// PATCH /api/units/:id/wargear/:index and /abilities/:index
+// Change one entry in a list, sending only the fields that change.
+
+// /wargear/0 is fine. /wargear/-1 and /wargear/first are not.
+export function checkIndex(req, res, next) {
+  const index = Number(req.params.index);
+  if (!Number.isInteger(index) || index < 0) {
+    return res.status(404).json({ error: `No entry "${req.params.index}". Entries are numbered from 0.` });
+  }
+  req.index = index;
+  next();
+}
+
+// The body has to be a non-empty object, e.g. { "Range": 13 }.
+// What each field is allowed to be is checked once it is merged with the entry.
+export function checkEntryChanges(req, res, next) {
+  const body = req.body ?? {};
+  if (typeof body !== "object" || Array.isArray(body)) {
+    return res.status(400).json({ error: "The request body must be a JSON object" });
+  }
+  if (Object.keys(body).length === 0) {
+    return res.status(400).json({ error: "Send at least one field to change" });
+  }
+  req.changes = body;
+  next();
+}
+
+const WEAPON_KEYS = ["Name", "Abilities", "Range", "A", "BS", "S", "AP", "D"];
+
+function refuseUnknown(changes, allowed) {
+  const unknown = Object.keys(changes).filter((key) => !allowed.includes(key));
+  return unknown.length > 0 ? unknown : null;
+}
+
+// Merges changes into one wargear entry and checks the result.
+// A weapon keeps being a weapon and a note keeps being a note.
+// Returns { value } (the cleaned entry) or { error }.
+export function mergeWargearEntry(entry, changes, i) {
+  const isWeapon = "Name" in entry;
+  const unknown = refuseUnknown(changes, isWeapon ? WEAPON_KEYS : ["Desc"]);
+  if (unknown) {
+    return {
+      error: isWeapon
+        ? `wargear[${i}] is a weapon. These fields cannot be changed: ${unknown.join(", ")}`
+        : `wargear[${i}] is a note, so only Desc can be changed. To turn it into a weapon, PATCH the whole wargear list.`,
+    };
+  }
+  const result = checkWargear({ ...entry, ...changes }, i);
+  return typeof result === "string" ? { error: result } : { value: result };
+}
+
+// Abilities are notes, so Desc is the only field.
+export function mergeAbilityEntry(entry, changes, i) {
+  const unknown = refuseUnknown(changes, ["Desc"]);
+  if (unknown) return { error: `abilities[${i}] only has Desc. These fields cannot be changed: ${unknown.join(", ")}` };
+  if (!isText(changes.Desc)) return { error: `abilities[${i}].Desc must be text` };
+  return { value: { Desc: changes.Desc.trim() } };
 }

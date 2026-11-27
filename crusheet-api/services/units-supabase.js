@@ -24,6 +24,18 @@ export async function createUnit(unit) {
   return data;
 }
 
+export async function updateUnit(id, userId, changes) {
+  const { data, error } = await supabase
+    .from("units")
+    .update(changes)
+    .eq("id", id)
+    .eq("user_id", userId) // only if it is yours
+    .select(COLUMNS)
+    .maybeSingle();
+  if (error) throw error;
+  return data; // null when there is no unit with that id that you own
+}
+
 export async function deleteUnit(id, userId) {
   const { data, error } = await supabase
     .from("units")

@@ -37,6 +37,12 @@ create policy "Users add their own units"
   on public.units for insert to authenticated
   with check ((select auth.uid()) = user_id);
 
+drop policy if exists "Users update their own units" on public.units;
+create policy "Users update their own units"
+  on public.units for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+
 drop policy if exists "Users delete their own units" on public.units;
 create policy "Users delete their own units"
   on public.units for delete to authenticated
