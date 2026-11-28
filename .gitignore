@@ -9,7 +9,7 @@ Thumbs.db
 
 # General safety nets (app-specific rules in portfolio-app/.gitignore)
 node_modules/
-.env
-.env.*
+.env*
 !.env.example
 *.log
+.vercel
